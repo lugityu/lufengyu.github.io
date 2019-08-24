@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://luyu.ml/images/iptables1.png">
 <meta property="og:image" content="http://luyu.ml/images/iptables2.png">
 <meta property="og:image" content="http://luyu.ml/images/iptables1.png">
-<meta property="og:updated_time" content="2019-08-24T03:33:22.502Z">
+<meta property="og:updated_time" content="2019-08-24T07:49:53.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables教程">
 <meta name="twitter:description" content="iptables教程安装配置: 配置文件 /etc/sysconfig/iptables  启动服务 /etc/init.d/iptables startchkconfig –list iptables  iptables概述三个表  filter 负责过滤数据包，包括的规则链有，input，output和forward； nat 则涉及到网络地址转换，包括的规则链有。prerouting，pos">
@@ -351,7 +351,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-24 11:33:22" itemprop="dateModified" datetime="2019-08-24T11:33:22+08:00">2019-08-24</time>
+                <time title="修改时间：2019-08-24 15:49:53" itemprop="dateModified" datetime="2019-08-24T15:49:53+08:00">2019-08-24</time>
               </span>
             
           
@@ -462,8 +462,6 @@
 </blockquote>
 <h4 id="L-链名-LIST-列出规则"><a href="#L-链名-LIST-列出规则" class="headerlink" title="-L [链名] LIST,列出规则"></a>-L [链名] LIST,列出规则</h4><blockquote>
 <p><strong>v : 显示详细信息，包括每条规则的匹配包数量和匹配字节数</strong><br><br><strong>x : 在 v 的基础上，禁止自动单位换算（k，M）</strong><br><br><strong>n : 只显示IP地址和端口号码，不显示域名和服务名称</strong><br></p>
-</blockquote>
-<blockquote>
 <p><strong>iptables -L</strong> #粗略列出filter表所有链几所有规则<br><br><strong>iptables -t nat -vnL</strong> #用详细方式列出 nat 表所有链的所有规则，只显示IP地址和端口号<br><br><strong>iptables -t nat -vxnL PREROUTING</strong> #用详细方式列出 nat 表 PREROUYING 链的所有规则以及详细数字，不反解</p>
 </blockquote>
 </blockquote>
@@ -477,8 +475,6 @@
 </ul>
 <h4 id="按网络接口匹配"><a href="#按网络接口匹配" class="headerlink" title="按网络接口匹配"></a>按网络接口匹配</h4><blockquote>
 <p>&emsp;<strong>-i &lt;匹配数据进入的网络接口&gt;  #此参数主要应用于nat表，例如目标地址转换</strong><br><br><strong>例如：</strong><br><br>&emsp;<strong>-i ech0</strong><br><br>&emsp;&emsp;匹配是否从网络 ech0 进来<br><br>&emsp;<strong>-i ppp0</strong><br><br>&emsp;&emsp;匹配是否从网络 ppp0 进来<br></p>
-</blockquote>
-<blockquote>
 <p><strong>-o 匹配数据流出的网络接口<br>&emsp;&emsp;</strong><br>例如：<br><br>&emsp;&emsp;&emsp;<strong>-o echo<br>&emsp;&emsp;&emsp;-o ppp0</strong><br><br>iptables -t nat -o ech0 条件 动作</p>
 </blockquote>
 <h4 id="按来源目的地址匹配"><a href="#按来源目的地址匹配" class="headerlink" title="按来源目的地址匹配"></a>按来源目的地址匹配</h4><blockquote>
