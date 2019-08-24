@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://luyu.ml/images/iptables1.png">
 <meta property="og:image" content="http://luyu.ml/images/iptables2.png">
 <meta property="og:image" content="http://luyu.ml/images/iptables1.png">
-<meta property="og:updated_time" content="2019-08-24T03:17:40.432Z">
+<meta property="og:updated_time" content="2019-08-24T03:33:22.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables教程">
 <meta name="twitter:description" content="iptables教程安装配置: 配置文件 /etc/sysconfig/iptables  启动服务 /etc/init.d/iptables startchkconfig –list iptables  iptables概述三个表  filter 负责过滤数据包，包括的规则链有，input，output和forward； nat 则涉及到网络地址转换，包括的规则链有。prerouting，pos">
@@ -351,7 +351,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-24 11:17:40" itemprop="dateModified" datetime="2019-08-24T11:17:40+08:00">2019-08-24</time>
+                <time title="修改时间：2019-08-24 11:33:22" itemprop="dateModified" datetime="2019-08-24T11:33:22+08:00">2019-08-24</time>
               </span>
             
           
@@ -448,22 +448,17 @@
 <li>iptables [-t 要操作的表] &lt;操作命令&gt; [要操作的链] [规则号码] [匹配条件] [-j 匹配到以后的动作]</li>
 <li>操作命令( -A、-I、-D、-P、-F)</li>
 <li>查看命令(-[vnx]L)<blockquote>
-<p><strong>-A &lt;链名&gt;  APPEND，追加一条规则(放到最后)</strong><br>iptables -t filter -A INPUT -j DROP #拒绝所有人访问服务器<br><br><strong>-D &lt;链名&gt; &lt;规则号码 | 具体规则内容&gt; DELETE，删除一条规则</strong></p>
+<p><strong>-A &lt;链名&gt;  APPEND，追加一条规则(放到最后)</strong><br>iptables -t filter -A INPUT -j DROP #拒绝所有人访问服务器<br><br><strong>-D &lt;链名&gt; &lt;规则号码 | 具体规则内容&gt; DELETE，删除一条规则</strong><br><br>例如：<br></p>
 <blockquote>
-<p>例如：<br><br><strong>iptables -D INPUT 1</strong>（删除filter表INPUT链中的第一条规则，不管他的内容）<br><br><strong>iptables -P INPUT DROP</strong>    (设置filter表INPUT链的默认规则是DROP)<br></p>
-<br>
-**-F [链名] FLUSH,清楚规则**
-例如：<br>
-**iptables -t filter -A INPUT -j DROP** #添加规则<br>
-**iptables -F INPUT** #清除INPUT链上的规则<br>
-**iptables -F** #清除filter表中所有链上的规则<br>
-**iptables -t nat -F** #清除NAT表中所有链上的规则<br>
-**iptables -t nat -F PREROUTING #清除NAT表中PREROUTING链上的规则<br>
-<br>
- **注意:<br>**
-1、-F 仅仅是清空链中规则，并不影响-P 设置的默认规则<br>
-2、 -P 设置了DROP后，使用 -F 一定要小心！！！<br> 
-3、如果不写链名，默认清空某表里所有链名的所有规则<br>
+<p><strong>iptables -D INPUT 1</strong>（删除filter表INPUT链中的第一条规则，不管他的内容）<br><br><strong>iptables -P INPUT DROP</strong>    (设置filter表INPUT链的默认规则是DROP)<br></p>
+</blockquote>
+<p><strong>-F [链名] FLUSH,清楚规则</strong><br><br><strong>例如：<br></strong></p>
+<blockquote>
+<p><strong>iptables -t filter -A INPUT -j DROP</strong> #添加规则<br><br><strong>iptables -F INPUT</strong> #清除INPUT链上的规则<br><br><strong>iptables -F</strong> #清除filter表中所有链上的规则<br><br><strong>iptables -t nat -F</strong> #清除NAT表中所有链上的规则<br><br><strong>iptables -t nat -F PREROUTING</strong> #清除NAT表中PREROUTING链上的规则<br></p>
+</blockquote>
+<p> <strong>注意:</strong><br></p>
+<blockquote>
+<p>1、-F 仅仅是清空链中规则，并不影响-P 设置的默认规则<br><br>2、 -P 设置了DROP后，使用 -F 一定要小心！！！<br><br>3、如果不写链名，默认清空某表里所有链名的所有规则<br></p>
 </blockquote>
 <h4 id="L-链名-LIST-列出规则"><a href="#L-链名-LIST-列出规则" class="headerlink" title="-L [链名] LIST,列出规则"></a>-L [链名] LIST,列出规则</h4><blockquote>
 <p><strong>v : 显示详细信息，包括每条规则的匹配包数量和匹配字节数</strong><br><br><strong>x : 在 v 的基础上，禁止自动单位换算（k，M）</strong><br><br><strong>n : 只显示IP地址和端口号码，不显示域名和服务名称</strong><br></p>
@@ -544,20 +539,29 @@
 </blockquote>
 <p><strong>例如：</strong></p>
 <blockquote>
-<p><strong>iptables -A FORWARD -m mac –mac-source xx:xx:xx:xx:xx:xx -j DROP<br></strong><br>阻断来自某 MAC 地址的数据包，通过本机。<br><br><br><strong>注意：<br></strong><br>&emsp;报文经过路由后，数据保重源有的 mac 地址会被替换，所以在路由后的 iptables 中使用 mac 模块是没有意义的</p>
+<p><strong>iptables -A FORWARD -m mac –mac-source xx:xx:xx:xx:xx:xx -j DROP<br></strong><br>阻断来自某 MAC 地址的数据包，通过本机。<br><br></p>
+</blockquote>
+<p> <strong>注意：<br></strong></p>
+<blockquote>
+<p>&emsp;报文经过路由后，数据保重源有的 mac 地址会被替换，所以在路由后的 iptables 中使用 mac 模块是没有意义的</p>
 </blockquote>
 <h4 id="按包速率匹配（limit）"><a href="#按包速率匹配（limit）" class="headerlink" title="按包速率匹配（limit）"></a>按包速率匹配（limit）</h4><blockquote>
 <p><strong>-m limit –limit 匹配速率 [–burst 缓冲数量]</strong><br>用一定速率去匹配数据包</p>
 </blockquote>
 <p><strong>例如：</strong></p>
 <blockquote>
-<p><strong>iptables -A FORWARD -d 192.168.0.1 -m limit –limit 50/s -j ACCEPT<br></strong><br><strong>iptables -A FORWARD -d 192.168.0.1 -j DROP<br><br></strong><br><strong>注意：<br></strong><br>&emsp;limit 英语上看是限制的意思，实际上只是按约定速率去匹配而已，50/s表示1秒中转发50个数据包，想要限制的话后面要再跟一条 DROP</p>
+<p><strong>iptables -A FORWARD -d 192.168.0.1 -m limit –limit 50/s -j ACCEPT<br></strong><br><strong>iptables -A FORWARD -d 192.168.0.1 -j DROP<br><br></strong></p>
+</blockquote>
+<p><strong>注意：<br></strong></p>
+<blockquote>
+<p>&emsp;limit 英语上看是限制的意思，实际上只是按约定速率去匹配而已，50/s表示1秒中转发50个数据包，想要限制的话后面要再跟一条 DROP</p>
 </blockquote>
 <h4 id="多端口匹配（multiport）"><a href="#多端口匹配（multiport）" class="headerlink" title="多端口匹配（multiport）"></a>多端口匹配（multiport）</h4><blockquote>
 <p><strong>-m multiport &lt;–sports|–dports|–ports&gt; 端口1[,端口2,端口n]<br></strong><br>一次性匹配多个端口，可以区分源端口，目的端口或不指定端口<br><br><strong>例如：</strong></p>
-</blockquote>
 <blockquote>
-<p><strong>iptables -A INPUT -p tcp -m multiport –dports 21,22,25,80, -j ACCEPT<br></strong><br>#允许所有客户端访问本服务器的21,22,25,80 端口上的服务<br><br><br><strong>注意：<br></strong><br>&emsp;必须与 -p参数一起使用<br></p>
+<p><strong>iptables -A INPUT -p tcp -m multiport –dports 21,22,25,80, -j ACCEPT<br></strong><br>#允许所有客户端访问本服务器的21,22,25,80 端口上的服务<br><br></p>
+</blockquote>
+<p><strong>注意：<br></strong><br>&emsp;必须与 -p参数一起使用<br></p>
 </blockquote>
 
       
